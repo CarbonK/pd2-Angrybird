@@ -13,8 +13,19 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    item.cpp \
+    land.cpp \
+    bird.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    item.h \
+    land.h \
+    bird.h
 
 FORMS    += mainwindow.ui
+
+LIBS += -lBox2D
+
+RESOURCES += \
+    resource.qrc

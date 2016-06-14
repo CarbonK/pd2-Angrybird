@@ -1,1 +1,11 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/">
+        <file>Resource/BIRD_BIG_BROTHER.png</file>
+        <file>Resource/BIRD_BLUE.png</file>
+        <file>Resource/BIRD_GREEN.png</file>
+        <file>Resource/BIRD_GREY.png</file>
+        <file>Resource/BIRD_RED.png</file>
+        <file>Resource/BIRD_YELLOW.png</file>
+        <file>Resource/BACKGROUND_10_LAYER_3_ITEM_1.png</file>
+    </qresource>
+</RCC>

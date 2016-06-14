@@ -1,11 +1,18 @@
 #ifndef LAND_H
 #define LAND_H
 
+#include "item.h"
 
-class Land
+#include <QGraphicsScene>
+
+class Land:
+public Item
 {
-public:
-    Land();
+
+    public:
+
+        explicit Land(b2World *dim, QRectF rect, QPixmap pix, QGraphicsScene *scene);
+
 };
 
 #endif // LAND_H
