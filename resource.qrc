@@ -6,6 +6,7 @@
         <file>Resource/BIRD_GREY.png</file>
         <file>Resource/BIRD_RED.png</file>
         <file>Resource/BIRD_YELLOW.png</file>
-        <file>Resource/BACKGROUND_10_LAYER_3_ITEM_1.png</file>
+        <file>Resource/PIGLANTIS_GROUND.png</file>
+        <file>Resource/PIGLANTIS_SKY.png</file>
     </qresource>
 </RCC>

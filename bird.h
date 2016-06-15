@@ -8,7 +8,7 @@
 
 #define B_DENSITY 10.0f
 #define B_FRACTION 0.2f
-#define B_RESTITUTION 0.5f
+#define B_RESTITUTION 0.4f
 
 class Bird:
 public Item

@@ -1,12 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "bird_red.h"
 #include "item.h"
+#include "land.h"
 
 #include <Box2D/Box2D.h>
 #include <QGraphicsScene>
 #include <QList>
 #include <QMainWindow>
+#include <QMouseEvent>
 #include <QTimer>
 
 namespace Ui{class MainWindow;}
@@ -23,6 +26,8 @@ public QMainWindow
         ~MainWindow();
 
         void showEvent(QShowEvent *);
+        void mousePressEvent(QMouseEvent *);
+        void closeEvent();
 
     private:
 
@@ -32,6 +37,7 @@ public QMainWindow
         QGraphicsScene *scene;
         QList<Item *> object;
         QTimer *timer;
+        Land *land;
 
     signals:
 

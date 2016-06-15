@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     item.cpp \
     land.cpp \
-    bird.cpp
+    bird.cpp \
+    bird_red.cpp
 
 HEADERS  += mainwindow.h \
     item.h \
     land.h \
-    bird.h
+    bird.h \
+    bird_red.h
 
 FORMS    += mainwindow.ui
 
