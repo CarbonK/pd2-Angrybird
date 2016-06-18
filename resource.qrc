@@ -8,5 +8,59 @@
         <file>Resource/BIRD_YELLOW.png</file>
         <file>Resource/PIGLANTIS_GROUND.png</file>
         <file>Resource/PIGLANTIS_SKY.png</file>
+        <file>Resource/SLING_SHOT_01_BACK.png</file>
+        <file>Resource/SLING_SHOT_01_FRONT.png</file>
+        <file>Resource/BLOCK_WOOD_10X1_1.png</file>
+        <file>Resource/BLOCK_WOOD_4X4_1.png</file>
+        <file>Resource/BLOCK_WOOD_1_8.png</file>
+        <file>Resource/BLOCK_WOOD_1_7.png</file>
+        <file>Resource/BLOCK_WOOD_1_6.png</file>
+        <file>Resource/BLOCK_WOOD_1_5.png</file>
+        <file>Resource/BLOCK_WOOD_1_4.png</file>
+        <file>Resource/BLOCK_WOOD_1_3.png</file>
+        <file>Resource/BLOCK_WOOD_1_2.png</file>
+        <file>Resource/BLOCK_WOOD_1_1.png</file>
+        <file>Resource/PIGLETTE_SMALL_01.png</file>
+        <file>Resource/PIGLETTE_MEDIUM_01.png</file>
+        <file>Resource/PIGLETTE_KING_01.png</file>
+        <file>Resource/PIGLETTE_HELMET_01.png</file>
+        <file>Resource/PIGLETTE_SMALL_03.png</file>
+        <file>Resource/PIGLETTE_SMALL_02.png</file>
+        <file>Resource/PIGLETTE_MEDIUM_03.png</file>
+        <file>Resource/PIGLETTE_MEDIUM_02.png</file>
+        <file>Resource/PIGLETTE_KING_03.png</file>
+        <file>Resource/PIGLETTE_KING_02.png</file>
+        <file>Resource/PIGLETTE_HELMET_03.png</file>
+        <file>Resource/PIGLETTE_HELMET_02.png</file>
+        <file>Resource/BLOCK_WOOD_10X1_4.png</file>
+        <file>Resource/BLOCK_WOOD_10X1_3.png</file>
+        <file>Resource/BLOCK_WOOD_10X1_2.png</file>
+        <file>Resource/BLOCK_WOOD_4X4_4.png</file>
+        <file>Resource/BLOCK_WOOD_4X4_3.png</file>
+        <file>Resource/BLOCK_WOOD_4X4_2.png</file>
+        <file>Resource/BLOCK_WOOD_4_8.png</file>
+        <file>Resource/BLOCK_WOOD_4_7.png</file>
+        <file>Resource/BLOCK_WOOD_4_6.png</file>
+        <file>Resource/BLOCK_WOOD_4_5.png</file>
+        <file>Resource/BLOCK_WOOD_4_4.png</file>
+        <file>Resource/BLOCK_WOOD_4_3.png</file>
+        <file>Resource/BLOCK_WOOD_4_2.png</file>
+        <file>Resource/BLOCK_WOOD_4_1.png</file>
+        <file>Resource/BLOCK_WOOD_3_8.png</file>
+        <file>Resource/BLOCK_WOOD_3_7.png</file>
+        <file>Resource/BLOCK_WOOD_3_6.png</file>
+        <file>Resource/BLOCK_WOOD_3_5.png</file>
+        <file>Resource/BLOCK_WOOD_3_4.png</file>
+        <file>Resource/BLOCK_WOOD_3_3.png</file>
+        <file>Resource/BLOCK_WOOD_3_2.png</file>
+        <file>Resource/BLOCK_WOOD_3_1.png</file>
+        <file>Resource/BLOCK_WOOD_2_8.png</file>
+        <file>Resource/BLOCK_WOOD_2_7.png</file>
+        <file>Resource/BLOCK_WOOD_2_6.png</file>
+        <file>Resource/BLOCK_WOOD_2_5.png</file>
+        <file>Resource/BLOCK_WOOD_2_4.png</file>
+        <file>Resource/BLOCK_WOOD_2_3.png</file>
+        <file>Resource/BLOCK_WOOD_2_2.png</file>
+        <file>Resource/BLOCK_WOOD_2_1.png</file>
     </qresource>
 </RCC>

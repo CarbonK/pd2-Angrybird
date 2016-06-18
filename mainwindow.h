@@ -1,14 +1,18 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "bird_red.h"
+#include "bird.h"
+#include "collisioncontecter.h"
 #include "item.h"
 #include "land.h"
+#include "piggie.h"
+#include "object.h"
 
 #include <Box2D/Box2D.h>
 #include <QGraphicsScene>
 #include <QList>
 #include <QMainWindow>
+#include <QtMath>
 #include <QMouseEvent>
 #include <QTimer>
 
@@ -28,16 +32,22 @@ public QMainWindow
         void showEvent(QShowEvent *);
         void mousePressEvent(QMouseEvent *);
         void closeEvent();
+        bool eventFilter(QObject *, QEvent *);
 
     private:
 
         Ui::MainWindow *ui;
 
         b2World *dim;
+        CollisionContecter *sonar;
         QGraphicsScene *scene;
-        QList<Item *> object;
+        QList<Bird *> bird;
+        QList<Land *> land;
+        QList<Piggie *> pig;
+        QList<QGraphicsPixmapItem *> image;
+        QList<Object *> object;
+        QPointF launcher;
         QTimer *timer;
-        Land *land;
 
     signals:
 

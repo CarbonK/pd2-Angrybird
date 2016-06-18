@@ -17,13 +17,21 @@ SOURCES += main.cpp\
     item.cpp \
     land.cpp \
     bird.cpp \
-    bird_red.cpp
+    object.cpp \
+    collisioncontecter.cpp \
+    lv0.cpp \
+    accelerator.cpp \
+    piggie.cpp
 
 HEADERS  += mainwindow.h \
     item.h \
     land.h \
     bird.h \
-    bird_red.h
+    object.h \
+    collisioncontecter.h \
+    lv0.h \
+    accelerator.h \
+    piggie.h
 
 FORMS    += mainwindow.ui
 
@@ -31,3 +39,5 @@ LIBS += -lBox2D
 
 RESOURCES += \
     resource.qrc
+
+DISTFILES +=

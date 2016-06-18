@@ -3,6 +3,7 @@
 
 #include <Box2D/Box2D.h>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 #include <QObject>
 #include <QPair>
 
@@ -18,14 +19,24 @@ public QObject
         ~Item();
 
         static void setUnit(float , float , float , float);
+        void setVelocity(float , float);
+        float getMass();
+        b2Vec2 getVelocity();
+        bool getDeathflag();
+        b2Body * getBody();
+        QGraphicsPixmapItem * getExterior();
 
-    protected:
+        virtual void collision(Item *);
+
+protected:
 
         b2World *world;
         b2Body *body;
         QGraphicsPixmapItem *exterior;
         QSizeF size;
         static QPair<float , float> unit;
+        const int windowH;
+        bool Deathflag;
 
     public slots:
 

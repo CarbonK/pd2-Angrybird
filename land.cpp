@@ -8,17 +8,15 @@ Item(dim)
 {
 
     b2BodyDef def;
-    def.position.Set((rect.x() + rect.width() / 2) * unit.first , (rect.height() / 2 - 60) * unit.second);
+    def.position.Set((rect.x() + rect.width() / 2) * unit.first , 0);
     def.type = b2_staticBody;
     def.userData = this;
 
     b2PolygonShape shape;
     shape.SetAsBox(rect.width() / 2 * unit.first , rect.height() / 2 * unit.second);
 
-    body = dim->CreateBody(&def);
+    body = world->CreateBody(&def);
     body->CreateFixture(&shape , 0);
-
-    size = QSizeF(rect.width() , rect.height());
 
     exterior = new QGraphicsPixmapItem(pix);
 
@@ -29,3 +27,5 @@ Item(dim)
     exterior->setRotation(-(body->GetAngle() * 180 / 3.1415926));
 
 }
+
+Land::~Land(){}

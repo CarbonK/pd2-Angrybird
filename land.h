@@ -12,6 +12,7 @@ public Item
     public:
 
         explicit Land(b2World *dim, QRectF rect, QPixmap pix, QGraphicsScene *scene);
+        ~Land();
 
 };
 

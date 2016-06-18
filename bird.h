@@ -6,9 +6,9 @@
 #include <QGraphicsScene>
 #include <QTimer>
 
-#define B_DENSITY 10.0f
-#define B_FRACTION 0.2f
-#define B_RESTITUTION 0.4f
+#define B_DENSITY 100.0f
+#define B_FRACTION 10.0f
+#define B_RESTITUTION 0.3f
 
 class Bird:
 public Item
@@ -16,7 +16,12 @@ public Item
 
     public:
 
-        Bird(b2World *dim, float x, float y, float r, QPixmap pix, QGraphicsScene *scene);
+        Bird(b2World *dim, float x, float y, float r, QPixmap pix, QGraphicsScene *scene , QTimer *timer);
+        ~Bird();
+
+        void setGscale(float scale);
+
+        virtual void feature();
 
 };
 
