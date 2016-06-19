@@ -17,7 +17,7 @@ public Item
 
     public:
 
-        Piggie(b2World *dim, float x, float y, float r, int t , QGraphicsScene *scene, QTimer *timer);
+        Piggie(b2World *dim, QPointF point, int t , QGraphicsScene *scene, QTimer *timer);
 
         void collision(Item *);
 

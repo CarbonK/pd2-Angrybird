@@ -16,12 +16,18 @@ public Item
 
     public:
 
-        Bird(b2World *dim, float x, float y, float r, QPixmap pix, QGraphicsScene *scene , QTimer *timer);
+        Bird(b2World *dim, QPointF point, float r, QPixmap pix, QGraphicsScene *scene , QTimer *timer);
         ~Bird();
 
         void setGscale(float scale);
+        void setCD(bool);
+        bool getCD();
 
         virtual void feature();
+
+    private:
+
+        bool CD;
 
 };
 

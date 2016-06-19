@@ -2,12 +2,12 @@
 
 #include <QDebug>
 
-Bird::Bird(b2World *dim , float x , float y , float r , QPixmap pix , QGraphicsScene *scene , QTimer *timer):
-Item(dim)
+Bird::Bird(b2World *dim , QPointF point , float r , QPixmap pix , QGraphicsScene *scene , QTimer *timer):
+Item(dim) , CD(false)
 {
 
     b2BodyDef def;
-    def.position.Set((x + r) * unit.first , (windowH - y - r) * unit.second);
+    def.position.Set((point.x() + r) * unit.first , (windowH - point.y() - r) * unit.second);
     def.type = b2_dynamicBody;
     def.userData = this;
 
@@ -41,5 +41,9 @@ Item(dim)
 Bird::~Bird(){}
 
 void Bird::setGscale(float scale){body->SetGravityScale(scale);}
+
+void Bird::setCD(bool b){CD = b;}
+
+bool Bird::getCD(){return CD;}
 
 void Bird::feature(){}

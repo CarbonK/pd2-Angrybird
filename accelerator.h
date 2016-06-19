@@ -12,7 +12,7 @@ public Bird
 
     public:
 
-        Accelerator(b2World *dim, float x, float y, QGraphicsScene *scene, QTimer *timer);
+        Accelerator(b2World *dim, QPointF point, QGraphicsScene *scene, QTimer *timer);
 
         void feature();
 

@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     collisioncontecter.cpp \
     lv0.cpp \
     accelerator.cpp \
-    piggie.cpp
+    piggie.cpp \
+    bomber.cpp
 
 HEADERS  += mainwindow.h \
     item.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     collisioncontecter.h \
     lv0.h \
     accelerator.h \
-    piggie.h
+    piggie.h \
+    bomber.h
 
 FORMS    += mainwindow.ui
 

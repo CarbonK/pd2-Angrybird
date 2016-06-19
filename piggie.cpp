@@ -3,13 +3,17 @@
 #include <QDebug>
 #include <QtMath>
 
-Piggie::Piggie(b2World *dim , float x , float y , float r , int type , QGraphicsScene *scene , QTimer *timer):
+Piggie::Piggie(b2World *dim , QPointF point , int type , QGraphicsScene *scene , QTimer *timer):
 Item(dim)
 {
+
+    float r;
 
     switch(type){
 
         case small:
+
+            r = 20;
 
             image.push_back(QPixmap(":/Resource/PIGLETTE_SMALL_01.png"));
             image.push_back(QPixmap(":/Resource/PIGLETTE_SMALL_02.png"));
@@ -18,6 +22,8 @@ Item(dim)
 
         case medium:
 
+            r = 40;
+
             image.push_back(QPixmap(":/Resource/PIGLETTE_MEDIUM_01.png"));
             image.push_back(QPixmap(":/Resource/PIGLETTE_MEDIUM_02.png"));
             image.push_back(QPixmap(":/Resource/PIGLETTE_MEDIUM_03.png"));
@@ -25,12 +31,16 @@ Item(dim)
 
         case helmet:
 
+            r = 40;
+
             image.push_back(QPixmap(":/Resource/PIGLETTE_HELMET_01.png"));
             image.push_back(QPixmap(":/Resource/PIGLETTE_HELMET_02.png"));
             image.push_back(QPixmap(":/Resource/PIGLETTE_HELMET_03.png"));
             break;
 
         case king:
+
+            r = 50;
 
             image.push_back(QPixmap(":/Resource/PIGLETTE_KING_01.png"));
             image.push_back(QPixmap(":/Resource/PIGLETTE_KING_02.png"));
@@ -40,7 +50,7 @@ Item(dim)
     }
 
     b2BodyDef def;
-    def.position.Set((x + r) * unit.first , (windowH - y - r) * unit.second);
+    def.position.Set((point.x() + r) * unit.first , (windowH - point.y() - r) * unit.second);
     def.type = b2_dynamicBody;
     def.userData = this;
 

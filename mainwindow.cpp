@@ -30,6 +30,7 @@ void MainWindow::showEvent(QShowEvent *){
     sonar = new CollisionContecter;
     dim->SetContactListener(sonar);
 
+
     scene = new QGraphicsScene(0 , 0 , 1280 , 720);
     ui->graphicsView->setScene(scene);
 
@@ -49,21 +50,29 @@ void MainWindow::showEvent(QShowEvent *){
     timer->start(1000 / 60);
     connect(timer , SIGNAL(timeout()) , this , SLOT(tick()));
 
-    object.push_back(new Object(dim , QRectF(600 , 580 , 80 , 80) , QPixmap(":/Resource/BLOCK_WOOD_4X4_1.png") , scene , timer));
-    object.push_back(new Object(dim , QRectF(600 , 500 , 80 , 80) , QPixmap(":/Resource/BLOCK_WOOD_4X4_1.png") , scene , timer));
-    object.push_back(new Object(dim , QRectF(800 , 580 , 80 , 80) , QPixmap(":/Resource/BLOCK_WOOD_4X4_1.png") , scene , timer));
-    object.push_back(new Object(dim , QRectF(800 , 500 , 80 , 80) , QPixmap(":/Resource/BLOCK_WOOD_4X4_1.png") , scene , timer));
-    object.push_back(new Object(dim , QRectF(640 , 480 , 200 , 20) , QPixmap(":/Resource/BLOCK_WOOD_10X1_1.png") , scene , timer));
-    object.push_back(new Object(dim , QRectF(600 , 480 , 40 , 20) , QPixmap(":/Resource/BLOCK_WOOD_1_2.png") , scene , timer));
-    object.push_back(new Object(dim , QRectF(840 , 480 , 40 , 20) , QPixmap(":/Resource/BLOCK_WOOD_1_2.png") , scene , timer));
+    object.push_back(new Object(dim , QPointF(600 , 580) , Object::P4X4 , scene , timer));
+    object.push_back(new Object(dim , QPointF(600 , 500) , Object::P4X4 , scene , timer));
+    object.push_back(new Object(dim , QPointF(800 , 580) , Object::P4X4 , scene , timer));
+    object.push_back(new Object(dim , QPointF(800 , 500) , Object::P4X4 , scene , timer));
+    object.push_back(new Object(dim , QPointF(640 , 480) , Object::P10X1 , scene , timer));
+    object.push_back(new Object(dim , QPointF(600 , 480) , Object::P2X1 , scene , timer));
+    object.push_back(new Object(dim , QPointF(840 , 480) , Object::P2X1 , scene , timer));
 
-    pig.push_back(new Piggie(dim , 690 , 580 , 50 , Piggie::king , scene , timer));
+    pig.push_back(new Piggie(dim , QPointF(690 , 580) , Piggie::king , scene , timer));
 
-    bird.push_back(new LV0(dim , 145 , 480 , scene , timer));
+    birdType.push_back(lv0);
+    birdType.push_back(accelerator);
+
+    genBird();
 
 }
 
-void MainWindow::mousePressEvent(QMouseEvent *event){launcher = event->pos();}
+void MainWindow::mousePressEvent(QMouseEvent *event){
+
+    if(bird->getExterior()->pos() == QPointF(145 , 480)) launcher = event->pos();
+    else if(!bird->getCD()) bird->feature();
+
+}
 
 void MainWindow::closeEvent(){emit quitGame();}
 
@@ -71,19 +80,45 @@ bool MainWindow::eventFilter(QObject *, QEvent *event){
 
     if(event->type() == QEvent::MouseButtonRelease){
 
-        QMouseEvent *e = static_cast<QMouseEvent *>(event);
+        if(bird->getExterior()->pos() == QPointF(145 , 480)){
 
-        float speedMag = 0.3;
-        float dis = qSqrt(qPow(e->x() - launcher.x() , 2) + qPow(e->y() - launcher.y() , 2));
+            QMouseEvent *e = static_cast<QMouseEvent *>(event);
 
-        if(dis < 150.0f) bird.front()->setVelocity((launcher.x() - e->x()) * speedMag , (e->y() - launcher.y()) * speedMag);
-        else bird.front()->setVelocity(150 * speedMag * (launcher.x() - e->x()) / dis , 150 * speedMag * (e->y() - launcher.y()) / dis);
+            float speedMag = 0.3;
+            float dis = qSqrt(qPow(e->x() - launcher.x() , 2) + qPow(e->y() - launcher.y() , 2));
 
-        bird.front()->setGscale(1);
+            if(dis < 150.0f) bird->setVelocity((launcher.x() - e->x()) * speedMag , (e->y() - launcher.y()) * speedMag);
+            else bird->setVelocity(150 * speedMag * (launcher.x() - e->x()) / dis , 150 * speedMag * (e->y() - launcher.y()) / dis);
+
+            bird->setGscale(1);
+
+        }
 
     }
 
     return false;
+
+}
+
+void MainWindow::genBird(){
+
+    if(birdType.empty()) return;
+
+    switch(birdType.front()){
+
+        case lv0:
+
+            bird = new LV0(dim , QPointF(145 , 480) , scene , timer);
+            birdType.pop_front();
+            break;
+
+        case accelerator:
+
+            bird = new Accelerator(dim , QPointF(145 , 480) , scene , timer);
+            birdType.pop_front();
+            break;
+
+    }
 
 }
 
@@ -122,27 +157,26 @@ void MainWindow::tick(){
 
     pig.removeAll(NULL);
 
-    if(bird.front()->getBody()->IsAwake()){
+    if(bird != NULL && bird->getBody()->IsAwake()){
 
-        if(bird.front()->getExterior()->pos().x() < -40 || 1280 < bird.front()->getExterior()->pos().x()){
+        if(bird->getExterior()->pos().x() < -40 || 1280 < bird->getExterior()->pos().x()){
 
-            dim->DestroyBody(bird.front()->getBody());
-            scene->removeItem(bird.front()->getExterior());
-            delete bird.front();
-            bird.pop_front();
-            bird.push_back(new LV0(dim , 145 , 480 , scene , timer));
+            dim->DestroyBody(bird->getBody());
+            scene->removeItem(bird->getExterior());
+            delete bird;
+            bird = NULL;
 
         }
-        else if(bird.front()->getExterior()->pos() != QPointF(145 , 480) && (int)bird.front()->getVelocity().x == 0 && (int)bird.front()->getVelocity().y == 0){
+        else if(bird->getExterior()->pos() != QPointF(145 , 480) && (int)bird->getVelocity().x == 0 && (int)bird->getVelocity().y == 0){
 
-            dim->DestroyBody(bird.front()->getBody());
-            scene->removeItem(bird.front()->getExterior());
-            delete bird.front();
-            bird.pop_front();
-            bird.push_back(new LV0(dim , 145 , 480 , scene , timer));
+            dim->DestroyBody(bird->getBody());
+            scene->removeItem(bird->getExterior());
+            delete bird;
+            bird = NULL;
 
         }
 
     }
+    else if(bird == NULL) genBird();
 
 }

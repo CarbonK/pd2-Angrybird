@@ -12,7 +12,7 @@ public Bird
 
     public:
 
-        LV0(b2World *dim, float x, float y, QGraphicsScene *scene, QTimer *timer);
+        LV0(b2World *dim, QPointF point, QGraphicsScene *scene, QTimer *timer);
 
 };
 
