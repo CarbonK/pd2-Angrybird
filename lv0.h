@@ -14,6 +14,8 @@ public Bird
 
         LV0(b2World *dim, QPointF point, QGraphicsScene *scene, QTimer *timer);
 
+        void feature();
+
 };
 
 #endif // LV0_H

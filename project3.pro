@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     lv0.cpp \
     accelerator.cpp \
     piggie.cpp \
-    bomber.cpp
+    bomber.cpp \
+    megumi.cpp \
+    result.cpp
 
 HEADERS  += mainwindow.h \
     item.h \
@@ -33,9 +35,12 @@ HEADERS  += mainwindow.h \
     lv0.h \
     accelerator.h \
     piggie.h \
-    bomber.h
+    bomber.h \
+    megumi.h \
+    result.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    result.ui
 
 LIBS += -lBox2D
 

@@ -14,6 +14,8 @@ void Item::setUnit(float meterX , float meterY , float pixelX , float pixelY){un
 
 void Item::setVelocity(float x , float y){body->SetLinearVelocity(b2Vec2(x , y));}
 
+void Item::setDeathflag(bool b){Deathflag = b;}
+
 float Item::getMass(){return body->GetMass();}
 
 b2Vec2 Item::getVelocity(){return body->GetLinearVelocity();}

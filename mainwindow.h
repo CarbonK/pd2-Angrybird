@@ -2,12 +2,12 @@
 #define MAINWINDOW_H
 
 #include "bird.h"
-#include "accelerator.h"
 #include "collisioncontecter.h"
 #include "item.h"
 #include "land.h"
-#include "piggie.h"
 #include "object.h"
+#include "piggie.h"
+#include "result.h"
 
 #include <Box2D/Box2D.h>
 #include <QGraphicsScene>
@@ -36,7 +36,7 @@ public QMainWindow
         void closeEvent();
         bool eventFilter(QObject *, QEvent *);
 
-        enum{lv0 , accelerator};
+        enum{lv0 , accelerator , bomber , megumi};
 
     private:
 
@@ -50,15 +50,23 @@ public QMainWindow
         QList<Piggie *> pig;
         QList<QGraphicsPixmapItem *> image;
         QList<Object *> object;
+        QMovie *m;
         QPointF launcher;
         QQueue<int> birdType;
         QTimer *timer;
+        Result *r;
 
         void genBird();
 
     signals:
 
         void quitGame();
+
+    public slots:
+
+        void newGame();
+        void explosion();
+        void result();
 
     private slots:
 

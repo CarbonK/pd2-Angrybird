@@ -6,6 +6,7 @@ Bird(dim , point , 15 , QPixmap(":/Resource/BIRD_YELLOW.png") , scene , timer)
 
 void Accelerator::feature(){
 
+    if(getCD()) return;
     setVelocity(body->GetLinearVelocity().x * 5 , body->GetLinearVelocity().y * 5);
     setCD(true);
 

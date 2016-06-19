@@ -62,5 +62,7 @@
         <file>Resource/BLOCK_WOOD_2_3.png</file>
         <file>Resource/BLOCK_WOOD_2_2.png</file>
         <file>Resource/BLOCK_WOOD_2_1.png</file>
+        <file>Resource/megumi.png</file>
+        <file>Resource/Explosion.gif</file>
     </qresource>
 </RCC>

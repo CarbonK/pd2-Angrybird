@@ -20,6 +20,7 @@ public QObject
 
         static void setUnit(float , float , float , float);
         void setVelocity(float , float);
+        void setDeathflag(bool);
         float getMass();
         b2Vec2 getVelocity();
         bool getDeathflag();
@@ -28,7 +29,7 @@ public QObject
 
         virtual void collision(Item *);
 
-protected:
+    protected:
 
         b2World *world;
         b2Body *body;
@@ -37,6 +38,10 @@ protected:
         static QPair<float , float> unit;
         const int windowH;
         bool Deathflag;
+
+    signals:
+
+        void explosion();
 
     public slots:
 

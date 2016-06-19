@@ -3,20 +3,23 @@
 
 #include <QDialog>
 
-namespace Ui {
-class Result;
-}
+namespace Ui{class Result;}
 
-class Result : public QDialog
+class Result:
+public QDialog
 {
+
     Q_OBJECT
 
-public:
-    explicit Result(QWidget *parent = 0);
-    ~Result();
+    public:
 
-private:
-    Ui::Result *ui;
+        explicit Result(bool success , QWidget *parent = 0);
+        ~Result();
+
+    private:
+
+        Ui::Result *ui;
+
 };
 
 #endif // RESULT_H

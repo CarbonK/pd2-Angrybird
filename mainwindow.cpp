@@ -1,13 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "accelerator.h"
+#include "bomber.h"
 #include "lv0.h"
+#include "megumi.h"
 
 #include <new>
 #include <QDebug>
+#include <QMovie>
 
 MainWindow::MainWindow(QWidget *parent):
-QMainWindow(parent) , ui(new Ui::MainWindow)
+QMainWindow(parent) , ui(new Ui::MainWindow) , bird(NULL)
 {
 
     ui->setupUi(this);
@@ -17,6 +21,7 @@ QMainWindow(parent) , ui(new Ui::MainWindow)
 
 MainWindow::~MainWindow(){
 
+    delete r;
     delete scene;
     delete dim;
     delete ui;
@@ -30,47 +35,32 @@ void MainWindow::showEvent(QShowEvent *){
     sonar = new CollisionContecter;
     dim->SetContactListener(sonar);
 
-
     scene = new QGraphicsScene(0 , 0 , 1280 , 720);
     ui->graphicsView->setScene(scene);
 
-    image.push_back(new QGraphicsPixmapItem(QPixmap(":/Resource/SLING_SHOT_01_BACK.png")));
-    image.back()->setPos(150 , 460);
-    image.back()->setZValue(1);
-    image.push_back(new QGraphicsPixmapItem(QPixmap(":/Resource/SLING_SHOT_01_FRONT.png")));
-    image.back()->setPos(122 , 460);
-    image.back()->setZValue(3);
-    for(QGraphicsPixmapItem *&i : image){scene->addItem(i);}
+    m = new QMovie;
+    m->setFileName(":/Resource/Explosion.gif");
+    ui->label->setMovie(m);
 
     Item::setUnit(128 , 72 , size().width() , size().height());
 
     land.push_back(new Land(dim , QRectF(0 , 600 , 1280 , 120) , QPixmap(":/Resource/PIGLANTIS_GROUND.png") , scene));
 
     timer = new QTimer;
-    timer->start(1000 / 60);
     connect(timer , SIGNAL(timeout()) , this , SLOT(tick()));
 
-    object.push_back(new Object(dim , QPointF(600 , 580) , Object::P4X4 , scene , timer));
-    object.push_back(new Object(dim , QPointF(600 , 500) , Object::P4X4 , scene , timer));
-    object.push_back(new Object(dim , QPointF(800 , 580) , Object::P4X4 , scene , timer));
-    object.push_back(new Object(dim , QPointF(800 , 500) , Object::P4X4 , scene , timer));
-    object.push_back(new Object(dim , QPointF(640 , 480) , Object::P10X1 , scene , timer));
-    object.push_back(new Object(dim , QPointF(600 , 480) , Object::P2X1 , scene , timer));
-    object.push_back(new Object(dim , QPointF(840 , 480) , Object::P2X1 , scene , timer));
-
-    pig.push_back(new Piggie(dim , QPointF(690 , 580) , Piggie::king , scene , timer));
-
-    birdType.push_back(lv0);
-    birdType.push_back(accelerator);
-
-    genBird();
+    newGame();
 
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event){
 
-    if(bird->getExterior()->pos() == QPointF(145 , 480)) launcher = event->pos();
-    else if(!bird->getCD()) bird->feature();
+    if(bird != NULL){
+
+        if(bird->getExterior()->pos() == QPointF(145 , 480)) launcher = event->pos();
+        else if(!bird->getCD()) bird->feature();
+
+    }
 
 }
 
@@ -80,7 +70,7 @@ bool MainWindow::eventFilter(QObject *, QEvent *event){
 
     if(event->type() == QEvent::MouseButtonRelease){
 
-        if(bird->getExterior()->pos() == QPointF(145 , 480)){
+        if(bird != NULL && bird->getExterior()->pos() == QPointF(145 , 480)){
 
             QMouseEvent *e = static_cast<QMouseEvent *>(event);
 
@@ -118,7 +108,139 @@ void MainWindow::genBird(){
             birdType.pop_front();
             break;
 
+        case bomber:
+
+            bird = new Bomber(dim , QPointF(145 , 480) , scene , timer);
+            birdType.pop_front();
+            break;
+
+        case megumi:
+
+            for(QGraphicsPixmapItem *&i : image) scene->removeItem(i);
+            bird = new Megumi(dim , QPointF(145 , 480) , scene , timer);
+            birdType.pop_front();
+            connect(bird , SIGNAL(explosion()) , this , SLOT(explosion()));
+            break;
+
     }
+
+}
+
+void MainWindow::newGame(){
+
+    ui->label->hide();
+
+    for(QGraphicsPixmapItem *&i : image){
+
+        scene->removeItem(i);
+        delete i;
+        i = NULL;
+
+    }
+
+    for(Object *&i : object){
+
+        dim->DestroyBody(i->getBody());
+        scene->removeItem(i->getExterior());
+        delete i;
+        i = NULL;
+
+    }
+
+    for(Piggie *&i :pig){
+
+        dim->DestroyBody(i->getBody());
+        scene->removeItem(i->getExterior());
+        delete i;
+        i = NULL;
+
+    }
+
+    if(bird != NULL){
+
+        dim->DestroyBody(bird->getBody());
+        scene->removeItem(bird->getExterior());
+        delete bird;
+        bird = NULL;
+
+    }
+
+    image.clear();
+    object.clear();
+    pig.clear();
+    birdType.clear();
+
+    image.push_back(new QGraphicsPixmapItem(QPixmap(":/Resource/SLING_SHOT_01_BACK.png")));
+    image.back()->setPos(150 , 460);
+    image.back()->setZValue(1);
+    image.push_back(new QGraphicsPixmapItem(QPixmap(":/Resource/SLING_SHOT_01_FRONT.png")));
+    image.back()->setPos(122 , 460);
+    image.back()->setZValue(3);
+    for(QGraphicsPixmapItem *&i : image){scene->addItem(i);}
+
+    object.push_back(new Object(dim , QPointF(600 , 580) , Object::P4X4 , scene , timer));
+    object.push_back(new Object(dim , QPointF(600 , 500) , Object::P4X4 , scene , timer));
+    object.push_back(new Object(dim , QPointF(800 , 580) , Object::P4X4 , scene , timer));
+    object.push_back(new Object(dim , QPointF(800 , 500) , Object::P4X4 , scene , timer));
+    object.push_back(new Object(dim , QPointF(640 , 480) , Object::P10X1 , scene , timer));
+    object.push_back(new Object(dim , QPointF(600 , 480) , Object::P2X1 , scene , timer));
+    object.push_back(new Object(dim , QPointF(840 , 480) , Object::P2X1 , scene , timer));
+
+    pig.push_back(new Piggie(dim , QPointF(690 , 580) , Piggie::king , scene , timer));
+
+    birdType.push_back(lv0);
+    birdType.push_back(accelerator);
+    birdType.push_back(bomber);
+    birdType.push_back(megumi);
+
+    genBird();
+
+    timer->start(1000 / 60);
+
+}
+
+void MainWindow::explosion(){
+
+    ui->label->show();
+    ui->label->movie()->start();
+
+    for(Object *&i : object){
+
+        dim->DestroyBody(i->getBody());
+        scene->removeItem(i->getExterior());
+        delete i;
+        i = NULL;
+
+    }
+
+    for(Piggie *&i :pig){
+
+        dim->DestroyBody(i->getBody());
+        scene->removeItem(i->getExterior());
+        delete i;
+        i = NULL;
+
+    }
+
+    dim->DestroyBody(bird->getBody());
+    scene->removeItem(bird->getExterior());
+    delete bird;
+    bird = NULL;
+
+}
+
+void MainWindow::result(){
+
+    timer->stop();
+
+    if(pig.empty()) r = new Result(true);
+    else if(birdType.empty()) r = new Result(false);
+
+    if(pig.empty() && birdType.empty()) QTimer::singleShot(7300 , r , SLOT(show()));
+    else r->show();
+
+    connect(r , SIGNAL(accepted()) , this , SLOT(newGame()));
+    connect(r , SIGNAL(rejected()) , this , SLOT(close()));
 
 }
 
@@ -178,5 +300,7 @@ void MainWindow::tick(){
 
     }
     else if(bird == NULL) genBird();
+
+    if((bird == NULL && birdType.empty()) || pig.empty()) result();
 
 }
